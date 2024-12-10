@@ -1,0 +1,25 @@
+trigger:
+  - master  # Adjust to your branch name
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+steps:
+  - task: UseDotNet@2
+    inputs:
+      packageType: 'sdk'
+      version: '7.x'  # Adjust to the version you used
+      installationPath: $(Agent.ToolsDirectory)/dotnet
+
+  - script: |
+      dotnet build
+    displayName: 'Build Solution'
+
+  - script: |
+      dotnet test
+    displayName: 'Run Tests'
+
+  - script: |
+      dotnet run
+    displayName: 'Run Hello World App'
+
